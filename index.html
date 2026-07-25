@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
+    <title>ytp-embed</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="wrap">
+      <div class="toolbar">
+        <form class="url-bar" id="url-form" autocomplete="off">
+          <label class="sr-only" for="url-input" data-i18n="form.label"
+            >YouTube playlist URL</label
+          >
+          <input
+            id="url-input"
+            name="url"
+            type="url"
+            inputmode="url"
+            placeholder="YouTube playlist URL"
+            data-i18n-placeholder="form.placeholder"
+            spellcheck="false"
+            required
+          />
+          <button type="submit" data-i18n="form.submit">Open</button>
+        </form>
+
+        <label class="lang-picker">
+          <span class="sr-only" data-i18n="lang.label">Language</span>
+          <select id="lang-select" aria-label="Language">
+            <option value="auto">Auto (browser)</option>
+            <option value="en">English</option>
+            <option value="zh-TW">繁體中文</option>
+            <option value="zh-CN">简体中文</option>
+          </select>
+        </label>
+      </div>
+
+      <p class="empty" id="empty" data-i18n="empty.hint" data-i18n-mode="html">
+        Paste a playlist URL (any link with a <code>list</code> parameter).
+      </p>
+
+      <div class="stage" id="stage" hidden>
+        <div class="media-row">
+          <div class="player-frame">
+            <div id="player"></div>
+          </div>
+
+          <aside class="playlist-pane" data-i18n-aria-label="playlist.aria" aria-label="Playlist">
+            <div class="playlist-head">
+              <div class="playlist-head-copy">
+                <strong id="playlist-title">Playlist</strong>
+                <span id="playlist-count">—</span>
+              </div>
+              <div class="playback-toggles" role="group" aria-label="Playback options">
+                <button
+                  type="button"
+                  id="shuffle-toggle"
+                  class="toggle-btn"
+                  aria-pressed="false"
+                  data-i18n-aria-label="playback.shuffle"
+                  title="Shuffle"
+                >
+                  <svg class="toggle-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                    <path
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="m18 14 4 4-4 4"
+                    />
+                    <path
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="m18 2 4 4-4 4"
+                    />
+                    <path
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M2 18h1.973a4 4 0 0 0 3.3-1.7l5.454-8.6a4 4 0 0 1 3.3-1.7H22"
+                    />
+                    <path
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M2 6h1.972a4 4 0 0 1 3.3 1.7l5.454 8.6a4 4 0 0 0 3.3 1.7H22"
+                    />
+                  </svg>
+                  <span class="sr-only" data-i18n="playback.shuffle">Shuffle</span>
+                </button>
+                <button
+                  type="button"
+                  id="loop-toggle"
+                  class="toggle-btn"
+                  aria-pressed="false"
+                  data-i18n-aria-label="playback.loop"
+                  title="Loop"
+                >
+                  <svg class="toggle-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                    <path
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M17 1l4 4-4 4"
+                    />
+                    <path
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M3 11V9a4 4 0 0 1 4-4h14"
+                    />
+                    <path
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M7 23l-4-4 4-4"
+                    />
+                    <path
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M21 13v2a4 4 0 0 1-4 4H3"
+                    />
+                  </svg>
+                  <span class="sr-only" data-i18n="playback.loop">Loop</span>
+                </button>
+              </div>
+            </div>
+            <div id="playlist-status" class="status" hidden></div>
+            <ol id="playlist" class="playlist"></ol>
+          </aside>
+        </div>
+
+        <div class="now-playing">
+          <div id="current-title">—</div>
+          <div id="current-meta" class="meta">—</div>
+        </div>
+      </div>
+    </div>
+
+    <script src="app.js" type="module"></script>
+  </body>
+</html>
